@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'sonic_pi'
+require_relative '../lib/sonic_pi'
 
 def stdin
   unless STDIN.tty?
@@ -26,6 +26,7 @@ sonic-pi-cli
 Usage:
   sonic_pi <code>
   sonic_pi stop
+  sonic_pi monitor
   cat music.rb | sonic_pi
   sonic_pi --help
 
@@ -33,9 +34,10 @@ Sonic Pi must be running for this utility to work.
 You can pipe code to stdin to execute it.
 
 Options:
-  <code>  Run the given code.
-  stop    Stop all running music.
-  --help  Display this text.
+  <code>   Run the given code.
+  stop     Stop all running music.
+  monitor  Continuously output messages from Sonic Pi.
+  --help   Display this text.
 
 Made by Nick Johnstone (github.com/Widdershin/sonic-pi-cli).
 Thanks to Sam Aaron for creating Sonic Pi.
@@ -52,6 +54,8 @@ def run
     app.test_connection!
 
     app.stop
+  when 'monitor'
+    app.monitor_all
   else
     app.test_connection!
 
